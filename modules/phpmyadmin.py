@@ -7,7 +7,7 @@
 from time import sleep
 from core import wcolors
 from core import help
-import httplib
+import httplib2
 import os
 options =["http://google.com"]
 def phpmyadmin():

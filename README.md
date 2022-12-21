@@ -28,7 +28,15 @@ Author : *****
 ## Download and Clone
 > Clone: git clone https://github.com/PanDa4KaBOY/websploitfix
 
+Commands
+	git clone https://github.com/PanDa4KaBOY/websploitfix
+	cd websploitfix
+	chmod +x websploit.py
+	pip install scapy
+	pip install httplib2
+	python3 websploit.py
+
 ## FIX
 	It is fix websploit The404Hacking
 
-##Thanks The404Hacking
+## Thanks The404Hacking
