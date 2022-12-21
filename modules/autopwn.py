@@ -18,14 +18,14 @@ def autopwn():
 		com = com.lower()
 		if com[0:10] =='set target':
 			options[0] = com[11:27]
-			print "TARGET => ", options[0]
+			print ("TARGET => ", options[0])
 			autopwn()
 		elif com[0:12]=='show options':
-			print ""
-			print "Options\t\t Value\t\t\t RQ\t Description"
-			print "---------\t--------------\t\t----\t--------------"
-			print "TARGET\t\t"+options[0]+"\t\t\tyes\tTarget IP Address"
-			print ""
+			print ("")
+			print ("Options\t\t Value\t\t\t RQ\t Description")
+			print ("---------\t--------------\t\t----\t--------------")
+			print ("TARGET\t\t"+options[0]+"\t\t\tyes\tTarget IP Address")
+			print ("")
 			autopwn()
 		elif com[0:2] =='os':
 			os.system(com[3:])
@@ -53,7 +53,7 @@ def autopwn():
 			myfile.close()
 			os.system('msfconsole -r /tmp/websploit_autopwn.rc')
 		else:
-			print "Wrong Command => ", com
+			print ("Wrong Command => ", com)
 			autopwn()
 	except(KeyboardInterrupt):
-		print ""
+		print ("")

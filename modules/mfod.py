@@ -20,24 +20,24 @@ def mfod():
 		com = com.lower()
 		if com[0:13] =='set interface':
 			options[0] = com[14:20]
-			print "INTERFACE => ", options[0]
+			print ("INTERFACE => ", options[0])
 			mfod()
 		elif com[0:11] =='set redhost':
 			options[1] = com[12:27]
-			print "REDHOST => ", options[1]
+			print ("REDHOST => ", options[1])
 			mfod()
 		elif com[0:10] =='set domain':
 			options[2] = com[11:19]
-			print "DOMAIN => ", options[2]
+			print ("DOMAIN => ", options[2])
 			mfod()
 		elif com[0:12] =='show options':
-			print ""
-			print "Options\t\t Value\t\t\t RQ\t Description"
-			print "---------\t--------------\t\t----\t--------------"
-			print "Interface\t"+options[0]+"\t\t\tyes\tNetwork Interface Name"
-			print "REDHOST\t\t"+options[1]+"\t\tyes\tIP Address Of Any Host For Redirect Victim"
-			print "DOMAIN\t\t"+options[2]+"\t\t\tyes\tType Of Domain (ex:.com)"
-			print ""
+			print ("")
+			print ("Options\t\t Value\t\t\t RQ\t Description")
+			print ("---------\t--------------\t\t----\t--------------")
+			print ("Interface\t"+options[0]+"\t\t\tyes\tNetwork Interface Name")
+			print ("REDHOST\t\t"+options[1]+"\t\tyes\tIP Address Of Any Host For Redirect Victim")
+			print ("DOMAIN\t\t"+options[2]+"\t\t\tyes\tType Of Domain (ex:.com)")
+			print ("")
 			mfod()
 		elif com[0:2] =='os':
 			os.system(com[3:])
@@ -87,6 +87,6 @@ def mfod():
 			os.system('killall ettercap')
 			print(wcolors.color.GREEN + "Cleanup Successfully." + wcolors.color.ENDC)
 		else:
-			print "Wrong Command => ", com
+			print ("Wrong Command => ", com)
 	except(KeyboardInterrupt,OSError):
 			print(wcolors.color.RED + "\n[*] (Ctrl + C ) Detected, Module Exit" + wcolors.color.ENDC)

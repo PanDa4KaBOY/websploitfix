@@ -19,20 +19,20 @@ def apache_users():
 		com = raw_input(line_1)
 		if com[0:7] =='set url':
 			url = com[8:]
-			print "URL => ", url
+			print ("URL => ", url)
 			options[0] = url
 			options[0]= options[0].replace("http://", "")
 			apache_users()
 		elif com[0:12] =='show options':
-			print ""
-			print " Options\t Value "
-			print "-----------\t----------------"
-			print "URL \t\t%s " %(options[0])
-			print ""
-			apache_users()	
+			print ("")
+			print (" Options\t Value ")
+			print ("-----------\t----------------")
+			print ("URL \t\t%s " %(options[0]))
+			print ("")
+			apache_users()
 		elif com[0:2] =='os':
 			os.system(com[3:])
-			apache_users()	
+			apache_users()
 		elif com[0:4] =='help':
 			help.help()
 			apache_users()

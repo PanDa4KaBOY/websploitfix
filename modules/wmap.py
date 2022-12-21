@@ -19,14 +19,14 @@ def wmap():
 		com = com.lower()
 		if com[0:10] =='set target':
 			options[0] = com[11:26]
-			print "TARGET => ", options[0]
+			print ("TARGET => ", options[0])
 			wmap()
 		elif com[0:12] =='show options':
-			print ""
-			print "Options\t\t Value\t\t\t\t RQ\t Description"
-			print "---------\t--------------\t\t\t----\t--------------"
-			print "TARGET\t\t"+options[0]+"\t\t\tyes\tTarget IP Address"
-			print ""
+			print ("")
+			print ("Options\t\t Value\t\t\t\t RQ\t Description")
+			print ("---------\t--------------\t\t\t----\t--------------")
+			print ("TARGET\t\t"+options[0]+"\t\t\tyes\tTarget IP Address")
+			print ("")
 			wmap()
 		elif com[0:2] =='os':
 			os.system(com[3:])
@@ -58,7 +58,7 @@ def wmap():
 			myfile.close()
 			os.system ('msfconsole -r websploit_wmap.rc')
 		else:
-			print "Wrong Command => ", com
+			print ("Wrong Command => ", com)
 			wmap()
 	except(KeyboardInterrupt):
 		print(wcolors.color.RED + "\n[*] (Ctrl + C ) Detected, Module Exit" + wcolors.color.ENDC)

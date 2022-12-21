@@ -20,14 +20,14 @@ def phpmyadmin():
 		com = com.lower()
 		if com[0:10] =='set target':
 			options[0] = com[11:]
-			print "TARGET => ", options[0]
+			print ("TARGET => ", options[0])
 			phpmyadmin()
 		elif com[0:12] =='show options':
-			print ""
-			print "Options\t\t Value"
-			print "---------\t--------------"
-			print "TARGET\t\t"+options[0]
-			print ""
+			print ("")
+			print ("Options\t\t Value")
+			print ("---------\t--------------")
+			print ("TARGET\t\t"+options[0])
+			print ("")
 			phpmyadmin()
 		elif com[0:2] =='os':
 			os.system(com[3:])
@@ -141,8 +141,7 @@ def phpmyadmin():
 			except(KeyboardInterrupt, SystemExit):
 				print(wcolors.color.RED + "[*] (Ctrl + C ) Detected, Module Exit" + wcolors.color.ENDC)
 		else:
-			print "Wrong Command => ", com
+			print ("Wrong Command => ", com)
 			phpmyadmin()
 	except(KeyboardInterrupt, SystemExit):
 		print(wcolors.color.RED + "[*] (Ctrl + C ) Detected, Module Exit" + wcolors.color.ENDC)
-

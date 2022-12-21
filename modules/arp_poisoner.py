@@ -22,19 +22,19 @@ def arp_poisoner():
         com = com.lower()
         if com[0:13] == 'set interface':
             options[0] = com[14:20]
-            print "INTERFACE => ",options[0]
+            print ("INTERFACE => ",options[0])
             arp_poisoner()
         elif com[0:10] == 'set router':
             options[1] = com[11:26]
-            print "ROUTER => ", options[1]
+            print ("ROUTER => ", options[1])
             arp_poisoner()
         elif com[0:10] == 'set target':
             options[2] = com[11:26]
-            print "TARGET => ", options[2]
+            print ("TARGET => ", options[2])
             arp_poisoner()
         elif com[0:9] =='set lhost':
             options[3] = com[10:25]
-            print "LHOST => ", options[3]
+            print ("LHOST => ", options[3])
             arp_poisoner()
         elif com[0:2] =='os':
             os.system(com[3:])
@@ -45,14 +45,14 @@ def arp_poisoner():
         elif com[0:4] =='back':
             pass
         elif com[0:12] =='show options':
-            print ""
-            print "Options\t\t Value\t\t\t\t RQ\t Description"
-            print "---------\t--------------\t\t\t----\t--------------"
-            print "Interface\t"+options[0]+"\t\t\t\tyes\tNetwork Interface Name"
-            print "ROUTER\t\t"+options[1]+"\t\t\tyes\tRouter IP Address"
-            print "TARGET\t\t"+options[2]+"\t\t\tyes\tTarget IP Address"
-            print "LHOST\t\t"+options[3]+"\t\t\tyes\tLocal IP Address"
-            print ""
+            print ("")
+            print ("Options\t\t Value\t\t\t\t RQ\t Description")
+            print ("---------\t--------------\t\t\t----\t--------------")
+            print ("Interface\t"+options[0]+"\t\t\t\tyes\tNetwork Interface Name")
+            print ("ROUTER\t\t"+options[1]+"\t\t\tyes\tRouter IP Address")
+            print ("TARGET\t\t"+options[2]+"\t\t\tyes\tTarget IP Address")
+            print ("LHOST\t\t"+options[3]+"\t\t\tyes\tLocal IP Address")
+            print ("")
             arp_poisoner()
         elif com[0:3] =='run':
             print (wcolors.color.BLUE + "[*]Setting Up ..." + wcolors.color.ENDC)
